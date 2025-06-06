@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DARX SUPPORT</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0f2027);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      color: white;
+      flex-direction: column;
+    }
+
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    header {
+      text-align: center;
+      color: #66fcf1;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 350px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      margin-top: 200px;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    input, textarea {
+      background: #fff;
+      color: #000;
+    }
+
+    button {
+      background: #66fcf1;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .channel-btn {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .channel-btn a {
+      color: #66fcf1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      font-size: 0.9em;
+      text-align: center;
+      color: #aaa;
+      background: black;
+      padding: 10px;
+      width: 100vw;
+      margin-top: 800px;
+    }
+    
+    .content {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div>
+      <header>
+    <h1>DARX SUPPORT</h1>
+  </header>
+
+  <form id="complaintForm">
+    <h2>Input Your Complaint</h2>
+    <input type="email" id="email" name="email" placeholder="Your Email" required />
+    <textarea id="complaint" name="complaint" rows="5" placeholder="Your Complaint" required></textarea>
+    <button type="submit">Send</button>
+    <div class="channel-btn">
+      <a href="https://whatsapp.com/channel/0029VbB2sQyISTkHzyZfDm2h" target="_blank">Visit Our Channel</a>
+    </div>
+  </form>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDIUxhVljm56kHtjyyYf_jlAw9nCh3NfWw",
+      authDomain: "complaintapp-88900.firebaseapp.com",
+      projectId: "complaintapp-88900",
+      storageBucket: "complaintapp-88900.appspot.com",
+      messagingSenderId: "961770777137",
+      appId: "1:961770777137:web:4f614a48baa382c1ab8310"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Form submission
+    document.getElementById("complaintForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const complaint = document.getElementById("complaint").value;
+
+      db.collection("complaints").add({
+        email,
+        complaint,
+        timestamp: new Date()
+      }).then(() => {
+        alert("Your complaint has been submitted!");
+        document.getElementById("complaintForm").reset();
+      }).catch(err => {
+        console.error(err);
+        alert("Your complaint was not submitted.Try again.");
+      });
+    });
+  </script>
+  </div>
+    <footer>
+    <p>&copy; <span id="year"></span> DarxTech. All rights reserved.</p>
+  </footer>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
